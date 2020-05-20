@@ -8,7 +8,7 @@ info:
     runt runtexterna, bärarobjekt samt kopplad information hämtas via K-samsök.
   contact:
     url: https://www.raa.se/kulturarv/runor-och-runstenar/projektet-evighetsrunor/
-  version: 0.9.8
+  version: 0.9.9
 servers:
   - description: Uppsala Universitet Evighetsrunor API
     url: http://runor.test.uu.se/rest/
@@ -1024,7 +1024,6 @@ components:
           nullable: true
           example: "200 m sydöst om nuvarande position."
 
-    # TODO - Överväg byt namn - lär finnas på wikin. Marcus återkommer.
     RunicInscription:
       description: Grundinformation för en runinskription.
       type: object
@@ -1217,19 +1216,29 @@ components:
             $ref: '#/components/schemas/Translation'
 
     RunicTextTranslationType:
+      type: object
+      description: Översättningstyp, transliterering/normalisering/översättning av en runtext.
       required:
         - id
         - is_complete
         - method
         - name
         - proper_name_searchable
-      type: object
-      description: Översättningstyp, transliterering/normalisering/översättning av en runtext.
       properties:
         id:
-          description: Anger identiteten (uuid) för översättningstypen.
+          description: |
+            Anger unik stabil identitet för översättningstypen.
+            - RUN (Runtext). Transliterering (tecken-för-tecken) av runtexten. Samtliga inskrifter som har text har en translitterering. (Komplett=true).
+            - FVN (Fornvästnordiska). Normalisering av runtexten på fornvästnordiska. Samtliga inskrifter har INTE normalisering på Fornvästnordiska. (Komplett = false).
+            - NFS (Nationellt fornspråk). Normalisering av runtexten på annat språk än fornvästnordiska. Samtliga inskrifter har INTE normalisering på Nationellt fornspråk. (Komplett = false).
+            - ENG (Engelska). Översättning av runtexten till engelska. Samtliga inskrifter har INTE översättning till engelska. (Komplett = false).
           type: string
-          example: da0b20c8-e036-456b-8f0a-6aeb06105f9a
+          enum:
+            - RUN
+            - NFS
+            - FVN
+            - ENG
+          example: RUN
         name:
           description: Namn på översättningstypen
           type: string
@@ -1238,18 +1247,20 @@ components:
           description: Anger om texter av denna översättningstyp har sökbara egennamn
           type: boolean
           example: true
-        is_complete:
-          description: Anger om texter av denna översättningstyp är kompletta
-          type: boolean
-          example: true
-        method:
-          description: Anger översättningsmetod
-          type: string
-          example: NORMALISERING
-          enum:
-            - NORMALISERING
-            - TRANSLITERERING
-            - OVERSATTNING
+#  TODO - ska denna vara kvar?. Hanna kollar med Toni och återkommer!!! Avvakta med denna tills vidare.
+#        is_complete:
+#          description: Anger om det finns en text av denna typ för samtliga inskrifter som har en text.
+#          type: boolean
+#          example: true
+# TODO Peter. Just nu överflödig för Evighetsrunor. Är den här viktig för dig ur söksynpunkt får du gärna ha kvar den, annars tar vi bort den.
+#        method:
+#          description: Anger översättningsmetod.
+#          type: string
+#          example: NORMALISERING
+#          enum:
+#            - NORMALISERING
+#            - TRANSLITERERING
+#            - OVERSATTNING
 
     RunicInscriptionGeoPosition:
       description: Objektrepresentation av en inskriftsbärares geografiska positioner med nuvarande och ev. ursprungligt läge att rendera på en bakgrundskarta
@@ -1296,20 +1307,6 @@ components:
         oldest_known:
           # Anger inskriftsbärarens äldsta kända position
           $ref: '#/components/schemas/Geometry'
-
-    PlaceResponse:
-      description: Objektrepresentation av en plats (place) och runinskriftsidentiteter avsett för "typeahead" ändamål.
-      type: object
-      properties:
-        place:
-          description: Innehåller namn på plats.
-          type: string
-          example: "Resmo kyrka"
-        place_id:
-          description: Anger identiteten (uuid) för platsen.
-          type: string
-          format: uuid
-          example: ccf0a7f9-1f4c-421f-a321-0e36daea43eb
 
     RunicType:
       description: Anger vilka typer av runor som använts i inskriften.
