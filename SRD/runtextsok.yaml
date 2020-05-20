@@ -1220,8 +1220,8 @@ components:
       description: Översättningstyp, transliterering/normalisering/översättning av en runtext.
       required:
         - id
-        - is_complete
-        - method
+#        - is_complete
+#        - method
         - name
         - proper_name_searchable
       properties:
@@ -1244,7 +1244,7 @@ components:
           type: string
           example: Fornvästnordiska
         proper_name_searchable:
-          description: Anger om texter av denna översättningstyp har sökbara egennamn
+          description: Anger om texter av denna översättningstyp har sökbara egennamn på personer som t ex "Hagbard Handfaste" eller "Halvard".
           type: boolean
           example: true
 #  TODO - ska denna vara kvar?. Hanna kollar med Toni och återkommer!!! Avvakta med denna tills vidare.
