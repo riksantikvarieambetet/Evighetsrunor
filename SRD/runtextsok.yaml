@@ -501,8 +501,8 @@ paths:
           description: |
             Anger koordinater i kommaseparerad lista för spatial utsökning i bboxformat.
             Koordinatsystem för angivna geometrier (latitud, longitud) förväntas vara WGS84 (EPSG:4326) angivet i decimalgrader.
-            Koordinaterna förväntas vara south Latitude, north Latitude, west Longitude, east Longitude.
-            Exempel:16,57,56,16.7
+            Koordinaterna förväntas anges enligt ordning: bbox = min Longitude , min Latitude , max Longitude , max Latitude.
+            Exempel: 16,56,17,57.5
           required: true
           schema:
             type: string
