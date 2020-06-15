@@ -8,7 +8,7 @@ info:
     runt runtexterna, bärarobjekt samt kopplad information hämtas via K-samsök.
   contact:
     url: https://www.raa.se/kulturarv/runor-och-runstenar/projektet-evighetsrunor/
-  version: 0.9.14
+  version: 0.9.16
 servers:
   - description: Uppsala Universitet Evighetsrunor API
     url: http://runor.test.uu.se/rest/
@@ -560,6 +560,7 @@ paths:
     get:
       tags:
         - Utgåva
+        - Not implemented
       summary: Hämtar en lista med utgåvor
       description: Hämtar en lista med utgåvor
       responses:
@@ -922,11 +923,14 @@ components:
           type: string
           nullable: true
           example: Rättvik
-        country:
-          description: Anger ev. namn på land där inskriftsbäraren hittades.
+        country_code:
+          description: |
+            Anger landskod för ev. förekommande land där inskriftsbäraren hittades.
+            De språkkoder som kan förekomma är definierade enligt tvåställig "ISO 639-1 standard". <br>
+            Se: [https://www.loc.gov/standards/iso639-2/php/English_list.php](https://www.loc.gov/standards/iso639-2/php/English_list.php)
           type: string
           nullable: true
-          example: Sverige
+          example: se
 
     OriginalLocation:
       description: Grundinformation om en inskriftsbärares ursprungliga placering.
