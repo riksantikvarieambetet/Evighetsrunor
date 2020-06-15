@@ -926,9 +926,48 @@ components:
         country_code:
           description: |
             Anger landskod för ev. förekommande land där inskriftsbäraren hittades.
-            De språkkoder som kan förekomma är definierade enligt tvåställig "ISO 639-1 standard". <br>
-            Se: [https://www.loc.gov/standards/iso639-2/php/English_list.php](https://www.loc.gov/standards/iso639-2/php/English_list.php)
+            - DK sv: 'Danmark', en: 'Denmark'
+            - DE sv: 'Tyskland', en: 'Germany'
+            - FI sv: 'Finland', en: 'Finland'
+            - FO sv: 'Färöarna', en: 'Faroe Islands'
+            - FR sv: 'Frankrike', en: 'France'
+            - GL sv: 'Grönland', en: 'Greenland'
+            - GR sv: 'Grekland', en: 'Greece'
+            - GB_en sv: 'Storbritannien', en: 'United Kingdom'
+            - GB_sc sv: 'Skottland', en: 'Scotland'
+            - IE sv: 'Irland', en: 'Ireland'
+            - IT sv: 'Italien', en: 'Italy'
+            - IS sv: 'Island', en: 'Iceland'
+            - IM sv: 'Isle of Man', en: 'Isle of Man'
+            - LV sv: 'Lettland', en: 'Latvia'
+            - NO sv: 'Norge', en: 'Norway'
+            - NL sv: 'Nederländerna', en: 'Netherlands'
+            - RU sv: 'Ryssland', en: 'Russia'
+            - SE sv: 'Sverige', en: 'Sweden'
+            - TR sv: 'Turkiet', en: 'Turkey'
+            - UA sv: 'Ukraina', en: 'Ukraine'
           type: string
+          enum:
+            - DK
+            - DE
+            - FI
+            - FO
+            - FR
+            - GL
+            - GR
+            - GB_en
+            - GB_sc
+            - IE
+            - IT
+            - IS
+            - IM
+            - LV
+            - NO
+            - NL
+            - RU
+            - SE
+            - TR
+            - UA
           nullable: true
           example: SE
 
