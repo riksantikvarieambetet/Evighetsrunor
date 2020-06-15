@@ -946,6 +946,7 @@ components:
             - SE sv: 'Sverige', en: 'Sweden'
             - TR sv: 'Turkiet', en: 'Turkey'
             - UA sv: 'Ukraina', en: 'Ukraine'
+            - PL sv: 'Polen', en: 'Poland'
           type: string
           enum:
             - DK
@@ -968,6 +969,7 @@ components:
             - SE
             - TR
             - UA
+            - PL
           nullable: true
           example: SE
 
