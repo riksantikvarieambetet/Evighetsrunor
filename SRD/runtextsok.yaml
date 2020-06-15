@@ -930,7 +930,7 @@ components:
             Se: [https://www.loc.gov/standards/iso639-2/php/English_list.php](https://www.loc.gov/standards/iso639-2/php/English_list.php)
           type: string
           nullable: true
-          example: se
+          example: SE
 
     OriginalLocation:
       description: Grundinformation om en inskriftsbärares ursprungliga placering.
