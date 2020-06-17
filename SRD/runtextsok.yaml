@@ -1285,26 +1285,9 @@ components:
         - query
       type: object
       properties:
-        query:
-          type: array
-          description: Textsökfråga
-          items:
-            $ref: '#/components/schemas/TextQueryGroup'
-        timeinterval:
-          description: Anger sökvillkor baserade på datering inom ett intervall.
-          type: array
-          items:
-            $ref: '#/components/schemas/TimeInterval'
-        year:
-          description: Anger sökvillkor baserat på årtal.
-          type: array
-          items:
-            $ref: '#/components/schemas/Year'
-        filter:
-          type: array
-          description: Filtrering
-          items:
-            $ref: '#/components/schemas/Selection'
+        expression:
+          description: Uttryck bestående av olika villkor, kombinerade med AND, OR och NOT
+          $ref: '#/components/schemas/Expression'
         edition_id:
           type: string
           description: Anger id för önskad utgåva av SNRD som sökningen ska utföras på.
@@ -1336,16 +1319,8 @@ components:
       description: Kompletterande filter med urvalsgrupper
       required:
         - item
-        - op
       type: object
       properties:
-        op:
-          type: string
-          description: Logisk operator att användas när filter kombineras
-          enum:
-            - AND
-            - OR
-            - NOT
         item:
           $ref: '#/components/schemas/SelectionItem'
 
@@ -1369,39 +1344,12 @@ components:
             format: uuid
             example: "[dcf0a7f9-1f4c-421f-a321-0e36daea43ca, 54d36a4f-82ae-4690-9dc9-bfa8f5301cea]"
 
-    TextQueryGroup:
-      required:
-        - condition
-      type: object
-      properties:
-        op:
-          type: string
-          description: Anger logisk operator för användas när flera sökfrågor kombineras.
-            Första frågan i en TextQueryGroup behöver inte ha en logisk operator
-          enum:
-            - AND
-            - OR
-            - NOT
-        condition:
-          type: array
-          items:
-            $ref: '#/components/schemas/TextQuery'
-      description: Gruppering (tänk parenteser) av sökvillkor i en avancerad sökfråga
-
     TextQuery:
       required:
         - matching_text
         - proper_name_search
       type: object
       properties:
-        op:
-          type: string
-          description: Anger logisk operator för användas när flera sökfrågor kombineras.
-            Första frågan i en TextQuery behöver inte ha en logisk operator
-          enum:
-            - AND
-            - OR
-            - NOT
         matching_text:
           type: string
           description: Söktext
@@ -1436,13 +1384,6 @@ components:
         - year
       type: object
       properties:
-        op:
-          type: string
-          description: Anger logisk operator för användas när flera sökfrågor kombineras.
-            Första frågan i en TextQuery behöver inte ha en logisk operator
-          enum:
-            - OR
-            - NOT
         year:
           type: integer
           description: Anger årtalet.
@@ -1457,13 +1398,6 @@ components:
         - to_year
       type: object
       properties:
-        op:
-          type: string
-          description: Anger logisk operator för användas när flera sökfrågor kombineras.
-            Första frågan i en TextQuery behöver inte ha en logisk operator
-          enum:
-            - OR
-            - NOT
         from_year:
           type: integer
           description: Anger start årtal för intervallet. Angivet årtal inkluderas i sökningen.
@@ -1492,3 +1426,52 @@ components:
           nullable: true
           example: Engelska
 
+    Expression:
+      description: Uttryck bestående av logiska uttryck, eller ett villkor.
+      oneOf:
+        - $ref: '#/components/schemas/AndOrExpression'
+        - $ref: '#/components/schemas/NotExpression'
+        - $ref: '#/components/schemas/Term'
+
+    NotExpression:
+      description: Logiskt uttryck bestående av ett uttryck som inte ska gälla.
+      type: object
+      required:
+        - child
+      properties:
+        child:
+          $ref: '#/components/schemas/Expression'
+
+    AndOrExpression:
+      description: >-
+        Logiskt uttryck som kombinerar andra uttryck med hjälp av AND eller OR beroende på värdet av `operator`. 
+        Om det förekommer flera villkor av typen `TextQuery` som direkta barn till detta uttryck och `operator`
+        är satt till `"AND"` ska alla TextQuery matcha samma ord i det olika texterna för att en inskrift ska
+        inkluderas i svaret.
+      type: object
+      required:
+        - operator
+        - children
+      properties:
+        operator:
+          type: string
+          enum:
+            - AND
+            - OR
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+
+    Term:
+      description: Ett villkor som matchas mot inskrifter
+      type: object
+      required:
+        - term
+      properties:
+        term:
+          oneOf:
+            - $ref: '#/components/schemas/TextQuery'
+            - $ref: '#/components/schemas/Year'
+            - $ref: '#/components/schemas/Selection'
+            - $ref: '#/components/schemas/TimeInterval'
