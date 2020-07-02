@@ -8,7 +8,7 @@ info:
     runt runtexterna, bärarobjekt samt kopplad information hämtas via K-samsök.
   contact:
     url: https://www.raa.se/kulturarv/runor-och-runstenar/projektet-evighetsrunor/
-  version: 0.9.14
+  version: 0.9.15
 servers:
   - description: Uppsala Universitet Evighetsrunor API
     url: http://runor.test.uu.se/rest/
@@ -1260,24 +1260,14 @@ components:
           example: sv-se
 
     SearchResult:
+      description: Resultat av en sökfråga
       required:
         - inscription
       type: object
       properties:
+        # TODO: Ändra namn till inscriptions?
         inscription:
-          type: array
-          description: Runinskrifter
-          items:
-            $ref: '#/components/schemas/RunicInscription'
-        found_words_index:
-          type: array
-          example:
-            - 0
-            - 4
-            - 6
-          items:
-            type: integer
-      description: Resultat av en sökfråga
+          $ref: '#/components/schemas/RunicInscription'
 
     SelectionItem:
       description: Anger ett urval (t ex socken Bro).
