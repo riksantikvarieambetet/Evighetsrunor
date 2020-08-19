@@ -1580,7 +1580,6 @@ components:
         - $ref: '#/components/schemas/Or'
         - $ref: '#/components/schemas/Not'
         - $ref: '#/components/schemas/TextQueryGroup'
-        - $ref: '#/components/schemas/Year'
         - $ref: '#/components/schemas/Selection'
         - $ref: '#/components/schemas/TimeInterval'
       discriminator:
