@@ -1127,11 +1127,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RunicType'
-        runic_type_descriptions:
-          description: Anger fritextbeskrivningar av de typer av runor som använts i inskriften.
-          type: array
-          items:
-            $ref: '#/components/schemas/RunicTypeDescription'
+        runic_type_description:
+          description: Anger fritextbeskrivning av de typer av runor som använts i inskriften.
+          $ref: '#/components/schemas/RunicTypeDescription'
         period:
           $ref: '#/components/schemas/Period'
         material:
